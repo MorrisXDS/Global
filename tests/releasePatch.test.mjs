@@ -26,7 +26,7 @@ test("patches the three release anchors exactly once", () => {
 test("pins patched request and response bundles to the fork release", () => {
 	const plugin = ["#!date = old", "#!version = 0.9.3", "https://github.com/Biliverse/Global/releases/download/v0.9.3/request.bundle.js", "https://github.com/Biliverse/Global/releases/download/v0.9.3/response.bundle.js"].join("\n");
 	const patched = patchPlugin(plugin, "v0.9.3-morris.1");
-	assert.match(patched, /#!version = 0\.9\.3-morris\.1/u);
+	assert.match(patched, /#!version = 0\.9\.3\.1/u);
 	assert.match(patched, /MorrisXDS\/Global\/releases\/download\/v0\.9\.3-morris\.1\/request\.bundle\.js/u);
 	assert.match(patched, /MorrisXDS\/Global\/releases\/download\/v0\.9\.3-morris\.1\/response\.bundle\.js/u);
 });

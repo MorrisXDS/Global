@@ -32,7 +32,7 @@ export function patchRequestBundle(source) {
 }
 
 export function patchPlugin(source, tag) {
-	const version = tag.replace(/^v/u, "");
+	const version = tag.replace(/^v/u, "").replace(/-morris\./u, ".");
 	let patched = source.replace(/^#!version = .*$/mu, `#!version = ${version}`);
 	patched = patched.replace(
 		/^#!date = .*$/mu,
