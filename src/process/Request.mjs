@@ -394,8 +394,7 @@ export async function Request($request) {
 async function availableFetch(request = {}, proxies = {}, locales = [], availableLocales = []) {
 	Console.log("☑️ availableFetch", `availableLocales: ${availableLocales}`);
 	availableLocales = availableLocales.filter(locale => locales.includes(locale));
-	let locale = "";
-	locale = availableLocales[Math.floor(Math.random() * availableLocales.length)];
+	const locale = locales.find(locale => availableLocales.includes(locale));
 	request.policy = proxies[locale];
 	Console.log("✅ availableFetch", `locale: ${locale}`);
 	return request;
@@ -423,7 +422,7 @@ async function mutiFetch(request = {}, proxies = {}, locales = []) {
 	}
 	const availableLocales = Object.keys(responses);
 	Console.log("☑️ mutiFetch", `availableLocales: ${availableLocales}`);
-	const locale = availableLocales[Math.floor(Math.random() * availableLocales.length)];
+	const locale = locales.find(locale => availableLocales.includes(locale));
 	request.policy = proxies[locale];
 	const response = responses[locale];
 	Console.log("✅ mutiFetch", `locale: ${locale}`);

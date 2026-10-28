@@ -1,3 +1,4 @@
+import gRPC from "@nsnanocat/grpc";
 import { Console } from "@nsnanocat/util";
 
 /**
@@ -19,9 +20,16 @@ export default function isResponseAvailability(response = {}) {
 				case "application/grpc+proto": {
 					const GrpcStatus = response?.headers?.["Grpc-Status"] ?? response?.headers?.["grpc-status"];
 					switch (GrpcStatus) {
-						case "0":
-							isAvailable = true;
+						case "0": {
+							try {
+								const body = new TextDecoder().decode(gRPC.decode(response?.body));
+								isAvailable = !["抱歉您所在地区不可观看！", "版权地区受限", "AREA_LIMIT"].some(message => body.includes(message));
+							} catch {
+								const ContentLength = response?.body?.byteLength ?? response?.body?.length ?? 0;
+								isAvailable = ContentLength > 4096;
+							}
 							break;
+						}
 						case undefined:
 						case "": {
 							// 无内容
